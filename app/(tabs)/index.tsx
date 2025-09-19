@@ -1,11 +1,67 @@
-import { View, Text } from 'react-native'
+import { View, Text, ScrollView,Image } from 'react-native'
 import React from 'react'
+import { images } from '@/constants/image'
 
 const index = () => {
   return (
-    <View>
-      <Text>index</Text>
-    </View>
+    
+
+  <ScrollView className='flex-1 bg-white'>
+
+      <View className='top w-full mt-5 flex-row justify-center'>
+
+        <Image source={images.logo} className='size-32'></Image>
+
+
+      </View>
+
+      <View className='second flex-1 flex-row h-[30vh] w-full justify-evenly items-center'>
+
+        <View className='h-full w-[45vw] bg-[#ECEFF1]'>
+          <Text className='mt-3 text-center italic text-slate-500 text-sm overflow-scroll'>Today's Tasks : </Text>
+
+          <ScrollView>
+          <Text className='mt-3 text-start ml-3 italic  text-slate-500 text-md'>1. Study Python </Text>
+          <Text className='mt-3 text-start ml-3 italic text-slate-500 text-md'>2. Learn React Native </Text>
+          <Text className='mt-3 text-start ml-3 italic text-slate-500 text-md'>3. Make Projects Websites </Text>
+          <Text className='mt-3 text-start ml-3 italic text-slate-500 text-md'>4. Learn Editing </Text>
+          <Text className='mt-3 text-start ml-3 italic  text-slate-500 text-md'>5. Study for CSIT Entrance </Text>
+          </ScrollView>
+
+
+        </View>
+        <View className='h-full w-[45vw] bg-[#ECEFF1]'>
+          <Text className='mt-3 text-center italic text-slate-500 text-sm'>Goals September : </Text>
+          <ScrollView>
+          <Text className='mt-3 text-start ml-3 italic  text-slate-500 text-md'>1. AI/ML start </Text>
+          <Text className='mt-3 text-start ml-3 italic text-slate-500 text-md'>2. Make good Protfolio </Text>
+          <Text className='mt-3 text-start ml-3 italic text-slate-500 text-md'>3. Make Projects Websites </Text>
+          <Text className='mt-3 text-start ml-3 italic text-slate-500 text-md'>4. Master Editing and Colour Grading </Text>
+          </ScrollView>
+        </View>
+
+      </View>
+            <View className='second mt-3 flex-1 flex-row gap-4 h-[30vh] w-full justify-center items-center'>
+
+        <View className='h-full w-[94vw] bg-[#ECEFF1]'>
+          <Text className='mt-3 text-center italic text-slate-500 text-sm'>Streaks : </Text>
+        </View>
+        </View>
+            <View className='second mt-3 flex-1 flex-row gap-4 h-[30vh] w-full justify-center items-center'>
+
+        <View className='h-full w-[94vw] bg-[#ECEFF1]'>
+          <Text className='mt-3 text-center italic text-slate-500 text-sm'>Your Tasks : </Text>
+        </View>
+        
+
+      </View>
+
+
+
+  </ScrollView>
+
+
+
   )
 }
 

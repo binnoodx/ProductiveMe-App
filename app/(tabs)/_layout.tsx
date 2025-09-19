@@ -13,11 +13,10 @@ const _layout = () => {
             return (
                 <>                   
                 <ImageBackground
-                    source={images.pill}
-                        
-                        className='flex flex-row w-full min-w-[102px] flex-1 mt-4 min-h-12 justify-center items-center rounded-full overflow-hidden'>
+                    source={images.pill}                       
+                        className='flex flex-row w-full min-w-[82px] flex-1 mt-2 min-h-12 justify-center items-center rounded-full overflow-hidden'>
                         <Image source={icon} tintColor="#151312" className='size-5 ' />
-                        <Text className='text-purple-700 ml-2 font-semibold'>{title}</Text>
+                        <Text className='text-purple-700 ml-1 text-sm'>{title}</Text>
                     </ImageBackground>
                 </>
             )
@@ -25,7 +24,7 @@ const _layout = () => {
         else{
             return(
                 <>
-                <View className=' flex-1 items-center mt-3'>
+                <View className=' flex-1 items-center mt-2 '>
                     <Image source={icon} className='size-5'></Image>
                 </View>
                 </>
@@ -39,7 +38,7 @@ const _layout = () => {
         <Tabs screenOptions={{
             tabBarShowLabel:false,
             tabBarStyle:{
-                backgroundColor:"#",
+                backgroundColor:"#ffffff",
                 
             }
         }}>
@@ -99,6 +98,20 @@ const _layout = () => {
                         <>
 
                             <PillTabs focused={focused} icon={images.timer} title="Timer" />
+                        </>
+                    )
+                }}
+
+            />
+            <Tabs.Screen
+                name='profile'
+                options={{
+                    headerShown: false,
+                    title: "Profile",
+                    tabBarIcon: ({ focused }) => (
+                        <>
+
+                            <PillTabs focused={focused} icon={images.profile} title="Profile" />
                         </>
                     )
                 }}
