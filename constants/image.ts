@@ -5,6 +5,8 @@ import pill from "@/assets/images/highlight.png"
 import timer from "@/assets/images/stopwatch.png"
 import task from "@/assets/images/clipboard.png"
 import profile from "@/assets/images/user.png"
+import add from "@/assets/images/plus.png"
+import remove from "@/assets/images/delete.png"
 
 
 export const images = {
@@ -15,6 +17,8 @@ export const images = {
     pill,
     timer,
     task,
-    profile
+    profile,
+    add,
+    remove
   
 };
