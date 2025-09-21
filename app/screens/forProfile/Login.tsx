@@ -2,6 +2,7 @@ import { Text, View, TextInput, Button, Alert, TouchableOpacity, ScrollView } fr
 import { useForm, Controller } from "react-hook-form"
 
 
+
 const Login = () => {
   const {
     control,
@@ -13,15 +14,51 @@ const Login = () => {
       password: "",
     },
   })
-  const onSubmit = (data: any) => console.log(data)
+  const onSubmit = async (data: any) => {
+
+
+    const response = await fetch(`http://192.168.1.7:3000/api/forLogin`, {
+      method: "POST",
+      body: JSON.stringify({
+        userEmail: data.email,
+        userPassword: data.password
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8"
+      }
+    })
+    const res = await response.json()
+    if (res.status) {
+      // Save token in localStorage
+      localStorage.setItem("token", data.token);
+       // redirect to protected page
+    }
+    }
+
+
+
+
+
+
+  const WhoAmI = async()=>{
+    const response = await fetch("http://192.168.1.7:3000/api/my_detail")
+    const res = await response.json()
+    console.log(res)
+  }
+
+
+
+
+
 
 
   return (
-    <ScrollView className="bg-[#e5e8e9]">
+    <View className="bg-white flex-1 justify-center items-center">
 
-      <View className="bg-white flex-1 mt-10 mx-10 py-10 justify-center items-center gap-5">
+      <View className="bg-white flex px-10 py-10  mx-10  justify-center items-center gap-5">
 
-        <Text className="text-black text-xl font-semibold mb-2">Login to Continue</Text>
+
+
 
 
         <Controller
@@ -62,10 +99,11 @@ const Login = () => {
           name="password"
         />
         <TouchableOpacity onPress={handleSubmit(onSubmit)} className="text-[#94a3b8] bg-green-400 w-[30vw] text-center px-5 py-2 rounded-sm font-semibold" ><Text className="w-full text-[#3f4245] text-center font-normal">Login</Text></TouchableOpacity>
+
       </View>
 
 
-    </ScrollView>
+    </View>
   )
 }
 export default Login

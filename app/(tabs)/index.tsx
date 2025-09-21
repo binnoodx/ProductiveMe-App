@@ -1,6 +1,7 @@
-import { View, Text, ScrollView,Image } from 'react-native'
+import { View, Text, ScrollView,Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { images } from '@/constants/image'
+import { Link } from 'expo-router'
 
 const index = () => {
   return (
@@ -8,12 +9,20 @@ const index = () => {
 
   <ScrollView className='flex-1 bg-white'>
 
-      <View className='top w-full mt-5 flex-row justify-center'>
+      <View className='top w-full mt-5 flex-row justify-evenly items-center'>
 
-        <Image source={images.logo} className='size-32'></Image>
+        <Image source={images.logo} className='size-28'></Image>
+
+        <View className='flex-col'>
+          <Text className='text-md italic font-semibold '>{new Date().toDateString()}</Text>
+        <Text className='text-md italic font-semibold '>{new Date().toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: true })}</Text>
+        </View>
+
 
 
       </View>
+
+      <Link href={"/Auth/Login"}>Login</Link>
 
       <View className='second flex-1 flex-row h-[30vh] w-full justify-evenly items-center'>
 

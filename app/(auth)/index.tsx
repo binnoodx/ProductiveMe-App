@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { TextInput, Button, View,Image, Text, FlatList, TouchableOpacity, ScrollView } from "react-native";
+import { TextInput, Button, View,Image, Text, FlatList, TouchableOpacity } from "react-native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import Signup from "../screens/forProfile/Signup";
 import { images } from "@/constants/image";
+import Login from "../screens/forProfile/Login";
 
 export default function App() {
   const TopTab = createMaterialTopTabNavigator();
@@ -9,10 +11,9 @@ export default function App() {
 
 
   return (
-
     
 
-      <View className="h-screen bg-white">
+    <View className="h-screen bg-white">
 
            <View className='top w-full h-[10vh] items-center mt-5 flex-row justify-evenly'>
 
@@ -24,16 +25,16 @@ export default function App() {
       </View>
 
 
+      <TopTab.Navigator>
+          <TopTab.Screen  name="Login" component={Login} />
+          <TopTab.Screen name="Signup" component={Signup} />
 
+        </TopTab.Navigator>
 
 
       </View>
-      
 
 
     
-
-
-
   );
 }

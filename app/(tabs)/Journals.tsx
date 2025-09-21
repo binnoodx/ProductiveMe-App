@@ -1,40 +1,37 @@
-import { images } from "@/constants/image";
 import React, { useState } from "react";
-import { View,Text, StyleSheet, TextInput, Dimensions, ScrollView,Image,TouchableOpacity } from "react-native";
+import { TextInput, Button, View, Image, Text, FlatList, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from "react-native";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import WriteJournals from "../screens/forJournals/WriteJournal";
+import ViewJournals from "../screens/forJournals/ViewJournals";
+import { images } from "@/constants/image";
+
+
+export default function App() {
+  const TopTab = createMaterialTopTabNavigator();
 
 
 
-const journal = () => {
-  const [text, setText] = useState("");
 
   return (
-    <ScrollView className=" bg-white">
+
+
+    <View className="h-screen bg-white">
+
       <View className='top w-full h-[10vh] items-center mt-5 flex-row justify-evenly'>
 
         <Image source={images.logo} className='size-24'></Image>
-        {/* <TouchableOpacity className="bg-green-500 px-5 py-2 rounded-sm"><Text className="text-slate-500 text-sm">See Previous Journals </Text></TouchableOpacity> */}
+              </View>
+
+
+      <TopTab.Navigator>
+        <TopTab.Screen name="Write New Journal" component={WriteJournals} />
+        <TopTab.Screen name="View Older Journals" component={ViewJournals} />
+      </TopTab.Navigator>
+
+
+    </View>
 
 
 
-
-      </View>
-
-      <View>
-        <TextInput
-          className="bg-[#ECEFF1] h-[80vh] mx-5 "
-          value={text}
-          onChangeText={setText}
-          placeholder="What happened today ..."
-          placeholderTextColor="#999"
-          multiline
-          textAlignVertical="top"
-        />
-      </View>
-
-    </ScrollView>
   );
 }
-
-
-
-export default journal

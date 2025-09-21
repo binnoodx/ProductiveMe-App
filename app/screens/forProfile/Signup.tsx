@@ -1,8 +1,9 @@
 import { Text, View, TextInput, Button, Alert, TouchableOpacity, ScrollView } from "react-native"
 import { useForm, Controller } from "react-hook-form"
-
+import { useRouter } from "expo-router"
 
 const Signup = () => {
+  const Router = useRouter()
   const {
     control,
     handleSubmit,
@@ -14,7 +15,32 @@ const Signup = () => {
       conpass:""
     },
   })
-  const onSubmit = (data: any) => console.log(data)
+  const onSubmit = async(data: any) => {
+
+    const response = await fetch("http://192.168.1.7:3000/api/forSignup", {
+        method: "POST",
+        body: JSON.stringify({
+          userName: "Binooooodx",
+          userEmail: data.email,
+          userPassword: data.password
+        }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8"
+        }
+      })
+
+
+      const res = await response.json()
+      console.log(res)
+
+      if(res.status){
+      }
+
+      else{
+      }
+
+
+  }
 
 
   return (
