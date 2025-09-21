@@ -1,25 +1,9 @@
-# Hello👋 , This is starting template for Expo which include tailwindcss for styling.
+# Greetings👋 , Productive Me , A cross platform app made for increasing productivity of users. This app containg much features and is under-development.
 
 
-## Get started
+## Developer Details
+Website: https://binodx.vercel.app
 
-1. Clone this repo in your Terminal
+Instagram : https://instagram.com/the_binodd/
 
-   ```bash
-   git clone https://github.com/binnoodx/Expo-RN-Template.git
-   ```
-
-2. Install dependencies
-
-   ```bash
-   npm install
-   ```
-
-3. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-##Then make youe Entire app.
-#Enjoy!
+## Feel free to contribute on this project. Your Contribution will be Appreciated.
