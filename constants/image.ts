@@ -7,6 +7,11 @@ import task from "@/assets/images/clipboard.png"
 import profile from "@/assets/images/user.png"
 import add from "@/assets/images/plus.png"
 import remove from "@/assets/images/delete.png"
+import AuthIllustration from "@/assets/images/Authentication.png"
+import WelcomeIllustration from "@/assets/images/Illustration.png.png"
+
+
+
 
 
 export const images = {
@@ -19,6 +24,9 @@ export const images = {
     task,
     profile,
     add,
-    remove
+    remove,
+
+    AuthIllustration,
+    WelcomeIllustration
   
 };

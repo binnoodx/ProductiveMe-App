@@ -1,17 +1,49 @@
 import { View, Text, ScrollView,Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { images } from '@/constants/image'
-import { Link } from 'expo-router'
+import { Link,useRouter } from 'expo-router'
+import { getToken,removeToken } from '@/helper/tokenManager'
+import { useEffect,useState } from 'react'
 
 const index = () => {
+  const Router=useRouter()
+  const [token, setToken] = useState("")
+
+  const RemoveToken = async()=>{
+    await removeToken("token")
+    Router.replace("/(auth)/Login")
+    setToken("")
+
+  }
+
+
+
+  useEffect(() => {
+    const fetchToken = async () => {
+      const token = await getToken()   
+
+      if(!token){
+        Router.replace("/(auth)/Login")   
+      }
+      else{
+        setToken(token)
+      }
+      }
+    fetchToken()
+  }, [])
+
+
   return (
     
 
   <ScrollView className='flex-1 bg-white'>
 
-      <View className='top w-full mt-5 flex-row justify-evenly items-center'>
+      <View className='top w-full mt-14 mb-5 flex-row justify-evenly items-center'>
 
-        <Image source={images.logo} className='size-28'></Image>
+        <TouchableOpacity onPress={RemoveToken}><Text>Clear Token</Text></TouchableOpacity>
+
+        {/* <Image source={images.logo} className='size-28'></Image> */}
+        <Text className='welcome_title font-extrabold text-orange-600 text-4xl'>Productive Me</Text>
 
         <View className='flex-col'>
           <Text className='text-md italic font-semibold '>{new Date().toDateString()}</Text>
@@ -22,7 +54,6 @@ const index = () => {
 
       </View>
 
-      <Link href={"/Auth/Login"}>Login</Link>
 
       <View className='second flex-1 flex-row h-[30vh] w-full justify-evenly items-center'>
 

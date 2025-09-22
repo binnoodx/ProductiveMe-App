@@ -17,11 +17,21 @@ const _layout = () => {
                     headerShown: false,                    
                 }}
 
-            />
-             
+            />    
+            <Stack.Screen
+                name='Login'
+                options={{
+                    headerShown: false,                    
+                }}
 
-            
-            
+            /> 
+            <Stack.Screen
+                name='Signup'
+                options={{
+                    headerShown: false,                    
+                }}
+
+            />     
         </Stack>
     )
 }
