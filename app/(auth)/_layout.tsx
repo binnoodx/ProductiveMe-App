@@ -31,7 +31,14 @@ const _layout = () => {
                     headerShown: false,                    
                 }}
 
-            />     
+            />   
+            <Stack.Screen
+                name='Verify'
+                options={{
+                    headerShown: false,                    
+                }}
+
+            />   
         </Stack>
     )
 }

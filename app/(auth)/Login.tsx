@@ -6,6 +6,8 @@ import { useState,useEffect } from "react";
 import { Link } from "expo-router";
 import { useRouter } from "expo-router";
 import { saveToken } from "@/helper/tokenManager";
+import Config from "react-native-config";
+
 
 const Login = () => {
   const {
@@ -41,6 +43,7 @@ const Login = () => {
 
 
   const onSubmit = async (data: any) => {
+
     setLoading(true)
     const response = await fetch(`http://192.168.1.6:3000/api/forLogin`, {
       method: "POST",
@@ -67,9 +70,9 @@ const Login = () => {
 
 
 
-      {IsKeyboardOn ? <View className="w-full justify-center items-center flex"><Image source={images.AuthIllustration} className="size-[8rem]" /></View> : <View className="w-full justify-center items-center flex"><Image source={images.AuthIllustration} className="size-[22rem]" /></View>}
+      {IsKeyboardOn ? <View className="w-full justify-center items-center flex"><Image source={images.mobile} className="size-[8rem]" /></View> : <View className="w-full justify-center items-center flex"><Image source={images.mobile} className="size-[22rem]" /></View>}
 
-      <Text className="text-3xl w-full text-center welcome_title font-bold">Welcome Back</Text>
+      <Text className="text-3xl w-full text-center welcome_title">Welcome Back User</Text>
 
       <KeyboardAvoidingView className="forInputs flex flex-col w-full mt-5 justify-center items-center gap-5">
 
@@ -131,7 +134,7 @@ const Login = () => {
        
         <Link href={"/Signup"}><Text className="text-md text-slate-400 italic">Don't have account ?</Text><Text className="text-md text-blue-500"> Create New Account</Text></Link>
        
-        <Link href={"/Signup"}><Text className="text-md text-slate-400 italic">Forget password ?</Text><Text className="text-md text-blue-500"> Recover Now</Text></Link>
+        <Link href={"/(auth)/GetEmailForRecovery"}><Text className="text-md text-slate-400 italic">Forget password ?</Text><Text className="text-md text-blue-500"> Recover Now</Text></Link>
 
 
 

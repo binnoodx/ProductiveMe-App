@@ -2,24 +2,24 @@ import { Text, View, TextInput, KeyboardAvoidingView, Image, Button, Alert, Touc
 import { useForm, Controller } from "react-hook-form"
 import { images } from "@/constants/image"
 import Checkbox from "expo-checkbox";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "expo-router";
 import { useRouter } from "expo-router";
 import { saveToken } from "@/helper/tokenManager";
 
-const Login = () => {
+const GetEmailForRecovery = () => {
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm({
     defaultValues: {
-      otp: "",
-      
+      email: "",
+
     },
   })
 
-  const [ApiErrors, setApiErrors] = useState("")
+  const [ApiError, setApiError] = useState("")
   const [IsKeyboardOn, setIsKeyboardOn] = useState(false)
   const [Loading, setLoading] = useState(false)
   const Router = useRouter()
@@ -42,11 +42,11 @@ const Login = () => {
 
   const onSubmit = async (data: any) => {
     setLoading(true)
-    const response = await fetch(`http://192.168.1.6:3000/api/forOTP`, {
+    const response = await fetch(`http://192.168.1.6:3000/api/GetEmailForRecovery`, {
       method: "POST",
       body: JSON.stringify({
-        otp: data.otp,
-        
+        email: data.email,
+
       }),
       headers: {
         "Content-type": "application/json; charset=UTF-8"
@@ -55,13 +55,12 @@ const Login = () => {
     const res = await response.json()
     setLoading(false)
     if (res.status) {
-      await saveToken(res.token)
-      Router.push("/(tabs)")
+      Router.push("/(auth)/SendOTPForRecovery")
     }
-    else{
-      setApiErrors(res.message)
-    }
+    else {
+      setApiError(res.message)
 
+    }
   }
 
   return (
@@ -69,9 +68,9 @@ const Login = () => {
 
 
 
-      {IsKeyboardOn ? <View className="w-full justify-center items-center flex"><Image source={images.mobile} className="size-[8rem]" /></View> : <View className="w-full justify-center items-center flex"><Image source={images.mobile} className="size-[22rem]" /></View>}
+      {IsKeyboardOn ? <View className="w-full justify-center items-center flex"><Image source={images.email} className="size-[8rem]" /></View> : <View className="w-full justify-center items-center flex"><Image source={images.email} className="size-[16rem]" /></View>}
 
-      <Text className="text-lg italic text-slate-500  w-full text-center welcome_title">6-digit OTP have been sent to your Inbox.</Text>
+      <Text className="text-xl italic text-slate-500  w-full text-center welcome_title">Enter Email to Recover</Text>
 
       <KeyboardAvoidingView className="forInputs flex flex-col w-full mt-5 justify-center items-center gap-5">
 
@@ -79,22 +78,17 @@ const Login = () => {
           control={control}
           rules={{
             required: {
-              value:true,
-              message:"Provide an OTP"
+              value: true,
+              message: "Provide an Email"
             },
-            minLength:{
-              value:6,
-              message:"OTP must be 6 Numbers"
-            },
-            maxLength:{
-              value:6,
-              message:"OTP must be 6 Numbers"
-            },
-
+            pattern: {
+              value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+              message: "Invalid email address"
+            }
           }}
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
-              placeholder="OTP"
+              placeholder="Email"
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
@@ -102,28 +96,28 @@ const Login = () => {
               placeholderTextColor={"#94a3b8"}
             />
           )}
-          name="otp"
+          name="email"
         />
-        {errors.otp && <Text className="text-xs text-start w-full px-16 text-red-500 italic">{errors.otp.message}</Text>}
-
-
-       
-
-        
+        {errors.email && <Text className="text-sm text-start w-full px-16 text-red-500 italic">{errors.email.message}</Text>}
+        {ApiError &&<Text className="text-sm text-start w-full px-16 text-red-500 italic">{ApiError}</Text> }
 
 
 
 
-        {
+
+
+
+
+
+               {
           Loading ? <TouchableOpacity disabled className='mt-3 bg-orange-400 w-[70vw] rounded-lg px-10 
         py-4'><Text className='text-white w-full text-lg text-center font-semibold'><ActivityIndicator size={"small"} className="w-full justify-center items-center flex" color={"white"} /></Text></TouchableOpacity> :
         
         <TouchableOpacity onPress={handleSubmit(onSubmit)} className='mt-3 bg-orange-400 w-[70vw] rounded-lg px-10 
-        py-4'><Text className='text-white w-full text-lg text-center font-semibold'>Verify</Text></TouchableOpacity>
+        py-4'><Text className='text-white w-full text-lg text-center font-semibold'>Continue</Text></TouchableOpacity>
         }
-       
-       
-       
+
+
 
 
 
@@ -139,4 +133,4 @@ const Login = () => {
     </ScrollView>
   )
 }
-export default Login
+export default GetEmailForRecovery

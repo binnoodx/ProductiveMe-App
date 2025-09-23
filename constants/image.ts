@@ -9,6 +9,13 @@ import add from "@/assets/images/plus.png"
 import remove from "@/assets/images/delete.png"
 import AuthIllustration from "@/assets/images/Authentication.png"
 import WelcomeIllustration from "@/assets/images/Illustration.png.png"
+import mobile from "@/assets/images/mobile.png"
+import email from "@/assets/images/Email.png"
+import password from "@/assets/images/password.png"
+
+
+
+
 
 
 
@@ -25,7 +32,9 @@ export const images = {
     profile,
     add,
     remove,
-
+    mobile,
+    email,
+    password,
     AuthIllustration,
     WelcomeIllustration
   
