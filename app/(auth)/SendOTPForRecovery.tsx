@@ -20,6 +20,8 @@ const SendOTPForRecovery = () => {
         },
     })
 
+    //Todo: Implement Feature of Resend Code
+
     const [ApiErrors, setApiErrors] = useState("")
     const [IsKeyboardOn, setIsKeyboardOn] = useState(false)
     const [Loading, setLoading] = useState(false)
@@ -107,6 +109,8 @@ const SendOTPForRecovery = () => {
                     name="otp"
                 />
                 {errors.otp && <Text className="text-sm text-start w-full px-16 text-red-500 italic">OTP is required.</Text>}
+                {ApiErrors && <Text className="text-sm text-start w-full px-16 text-red-500 italic">{ApiErrors}</Text>}
+
 
 
                 {
@@ -116,10 +120,6 @@ const SendOTPForRecovery = () => {
                         <TouchableOpacity onPress={handleSubmit(onSubmit)} className='mt-3 bg-orange-400 w-[70vw] rounded-lg px-10 
         py-4'><Text className='text-white w-full text-lg text-center font-semibold'>Verify</Text></TouchableOpacity>
                 }
-
-
-
-
 
 
             </KeyboardAvoidingView>

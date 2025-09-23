@@ -39,6 +39,27 @@ const _layout = () => {
                 }}
 
             />   
+            <Stack.Screen
+                name='GetEmailForRecovery'
+                options={{
+                    headerShown: false,                    
+                }}
+
+            /> 
+            <Stack.Screen
+                name='SendOTPForRecovery'
+                options={{
+                    headerShown: false,                    
+                }}
+
+            /> 
+            <Stack.Screen
+                name='ResetPassword'
+                options={{
+                    headerShown: false,                    
+                }}
+
+            /> 
         </Stack>
     )
 }

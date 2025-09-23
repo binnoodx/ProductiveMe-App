@@ -2,7 +2,7 @@ import { Text, View, TextInput, KeyboardAvoidingView, Image, Button, Alert, Touc
 import { useForm, Controller } from "react-hook-form"
 import { images } from "@/constants/image"
 import Checkbox from "expo-checkbox";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "expo-router";
 import { useRouter } from "expo-router";
 import { saveToken } from "@/helper/tokenManager";
@@ -15,7 +15,7 @@ const Login = () => {
   } = useForm({
     defaultValues: {
       otp: "",
-      
+
     },
   })
 
@@ -46,7 +46,7 @@ const Login = () => {
       method: "POST",
       body: JSON.stringify({
         otp: data.otp,
-        
+
       }),
       headers: {
         "Content-type": "application/json; charset=UTF-8"
@@ -58,7 +58,7 @@ const Login = () => {
       await saveToken(res.token)
       Router.push("/(tabs)")
     }
-    else{
+    else {
       setApiErrors(res.message)
     }
 
@@ -79,16 +79,16 @@ const Login = () => {
           control={control}
           rules={{
             required: {
-              value:true,
-              message:"Provide an OTP"
+              value: true,
+              message: "Provide an OTP"
             },
-            minLength:{
-              value:6,
-              message:"OTP must be 6 Numbers"
+            minLength: {
+              value: 6,
+              message: "OTP must be 6 Numbers"
             },
-            maxLength:{
-              value:6,
-              message:"OTP must be 6 Numbers"
+            maxLength: {
+              value: 6,
+              message: "OTP must be 6 Numbers"
             },
 
           }}
@@ -105,11 +105,13 @@ const Login = () => {
           name="otp"
         />
         {errors.otp && <Text className="text-xs text-start w-full px-16 text-red-500 italic">{errors.otp.message}</Text>}
+        {ApiErrors && <Text className="text-xs text-start w-full px-16 text-red-500 italic">{ApiErrors}</Text>}
 
 
-       
 
-        
+
+
+
 
 
 
@@ -117,13 +119,13 @@ const Login = () => {
         {
           Loading ? <TouchableOpacity disabled className='mt-3 bg-orange-400 w-[70vw] rounded-lg px-10 
         py-4'><Text className='text-white w-full text-lg text-center font-semibold'><ActivityIndicator size={"small"} className="w-full justify-center items-center flex" color={"white"} /></Text></TouchableOpacity> :
-        
-        <TouchableOpacity onPress={handleSubmit(onSubmit)} className='mt-3 bg-orange-400 w-[70vw] rounded-lg px-10 
+
+            <TouchableOpacity onPress={handleSubmit(onSubmit)} className='mt-3 bg-orange-400 w-[70vw] rounded-lg px-10 
         py-4'><Text className='text-white w-full text-lg text-center font-semibold'>Verify</Text></TouchableOpacity>
         }
-       
-       
-       
+
+
+
 
 
 

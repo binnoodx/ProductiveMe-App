@@ -60,7 +60,7 @@ const ResetPassword = () => {
             Router.push("/(auth)/Login")
         }
         else {
-            console.log(res.message)
+            setApiErrors(res.message)
         }
     }
 
@@ -146,12 +146,6 @@ const ResetPassword = () => {
 
                 <TouchableOpacity onPress={handleSubmit(onSubmit)} className='mt-3 bg-orange-400 w-[70vw] rounded-lg px-10 
         py-4'><Text className='text-white w-full text-lg text-center font-semibold'>{Loading ? <ActivityIndicator size={"small"} className="w-full justify-center items-center flex" color={"white"} /> : "Change"}</Text></TouchableOpacity>
-
-
-                
-
-
-
 
             </KeyboardAvoidingView>
 
