@@ -23,7 +23,7 @@ const index = () => {
       const token = await getToken()   
 
       if(!token){
-        Router.replace("/(auth)/Login")   
+        Router.replace("/(auth)/Login")
       }
       else{
         setToken(token)

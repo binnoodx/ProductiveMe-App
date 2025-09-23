@@ -24,7 +24,7 @@ export default function App() {
 
           setisLoading(true)
 
-          const response = await fetch(`http://192.168.1.2:3000/api/my_detail`, {
+          const response = await fetch(`http://192.168.1.6:3000/api/my_detail`, {
             method: "POST",
             body: JSON.stringify({
               token: token
@@ -37,6 +37,7 @@ export default function App() {
 
           const detail = await response.json()
 
+          console.log(detail.message)
           setisLoading(false)
 
           if (detail.status) {

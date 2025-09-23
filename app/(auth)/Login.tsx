@@ -42,7 +42,7 @@ const Login = () => {
 
   const onSubmit = async (data: any) => {
     setLoading(true)
-    const response = await fetch(`http://192.168.1.2:3000/api/forLogin`, {
+    const response = await fetch(`http://192.168.1.6:3000/api/forLogin`, {
       method: "POST",
       body: JSON.stringify({
         userEmail: data.email,
