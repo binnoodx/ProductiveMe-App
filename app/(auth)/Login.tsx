@@ -2,7 +2,7 @@ import { Text, View, TextInput, KeyboardAvoidingView, Image, Button, Alert, Touc
 import { useForm, Controller } from "react-hook-form"
 import { images } from "@/constants/image"
 import Checkbox from "expo-checkbox";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "expo-router";
 import { useRouter } from "expo-router";
 import { saveToken } from "@/helper/tokenManager";
@@ -21,6 +21,7 @@ const Login = () => {
     },
   })
 
+  const [ApiErrors, setApiErrors] = useState("")
   const [isChecked, setIsChecked] = useState(false)
   const [IsKeyboardOn, setIsKeyboardOn] = useState(false)
   const [Loading, setLoading] = useState(false)
@@ -45,7 +46,7 @@ const Login = () => {
   const onSubmit = async (data: any) => {
 
     setLoading(true)
-    const response = await fetch(`http://192.168.1.6:3000/api/forLogin`, {
+    const response = await fetch(`http://10.0.0.43:3000/api/forLogin`, {
       method: "POST",
       body: JSON.stringify({
         userEmail: data.email,
@@ -59,9 +60,10 @@ const Login = () => {
     setLoading(false)
     if (res.status) {
       await saveToken(res.token)
-      
-      console.log("Sent token is ",res.token)
       Router.push("/(tabs)")
+    }
+    else {
+      setApiErrors(res.message)
     }
   }
 
@@ -79,7 +81,14 @@ const Login = () => {
         <Controller
           control={control}
           rules={{
-            required: true,
+            required: {
+              value: true,
+              message: "Provide an Email"
+            },
+            pattern: {
+              value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+              message: "Invalid email address"
+            }
           }}
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
@@ -93,13 +102,16 @@ const Login = () => {
           )}
           name="email"
         />
-        {errors.email && <Text className="text-sm text-start w-full px-16 text-red-500 italic">Email is required.</Text>}
+        {errors.email && <Text className="text-sm text-start w-full px-16 text-red-500 italic">{errors.email?.message}</Text>}
 
 
         <Controller
           control={control}
           rules={{
-            maxLength: 100,
+            required: {
+              value: true,
+              message: "Provide a password"
+            },
           }}
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
@@ -114,6 +126,10 @@ const Login = () => {
           )}
           name="password"
         />
+        {errors.password && <Text className="text-sm text-start w-full px-16 text-red-500 italic">{errors.password.message}</Text>}
+        {ApiErrors && <Text className="text-sm text-start w-full px-16 text-red-500 italic">{ApiErrors}</Text>}
+
+
 
         <View className="flex-row gap-1 items-center justify-start w-full px-12">
           <Checkbox
@@ -128,12 +144,12 @@ const Login = () => {
 
 
 
-        <TouchableOpacity onPress={handleSubmit(onSubmit)} className='mt-3 bg-orange-400 w-[70vw] rounded-lg px-10 
-        py-4'><Text className='text-white w-full text-lg text-center font-semibold'>{Loading ? <ActivityIndicator size={"small"} className="w-full justify-center items-center flex" color={"white"} />:"Login"}</Text></TouchableOpacity>
-       
-       
+{Loading ? <TouchableOpacity disabled className='mt-3 bg-orange-400 w-[70vw] rounded-lg px-10 py-4'><ActivityIndicator size={"small"} color={"white"} /></TouchableOpacity>
+          : <TouchableOpacity onPress={handleSubmit(onSubmit)} className='mt-3 bg-orange-400 w-[70vw] rounded-lg px-10 py-4'><Text className='text-white w-full text-lg text-center font-semibold'>Login</Text></TouchableOpacity>
+        }
+
         <Link href={"/Signup"}><Text className="text-md text-slate-400 italic">Don't have account ?</Text><Text className="text-md text-blue-500"> Create New Account</Text></Link>
-       
+
         <Link href={"/(auth)/GetEmailForRecovery"}><Text className="text-md text-slate-400 italic">Forget password ?</Text><Text className="text-md text-blue-500"> Recover Now</Text></Link>
 
 

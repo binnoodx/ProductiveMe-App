@@ -12,6 +12,7 @@ import WelcomeIllustration from "@/assets/images/Illustration.png.png"
 import mobile from "@/assets/images/mobile.png"
 import email from "@/assets/images/Email.png"
 import password from "@/assets/images/password.png"
+import user from "@/assets/images/User.jpg"
 
 
 
@@ -36,6 +37,7 @@ export const images = {
     email,
     password,
     AuthIllustration,
-    WelcomeIllustration
+    WelcomeIllustration,
+    user
   
 };

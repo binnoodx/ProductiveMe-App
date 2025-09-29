@@ -42,7 +42,7 @@ const GetEmailForRecovery = () => {
 
   const onSubmit = async (data: any) => {
     setLoading(true)
-    const response = await fetch(`http://192.168.1.6:3000/api/GetEmailForRecovery`, {
+    const response = await fetch(`http://10.0.0.43:3000/api/GetEmailForRecovery`, {
       method: "POST",
       body: JSON.stringify({
         email: data.email,

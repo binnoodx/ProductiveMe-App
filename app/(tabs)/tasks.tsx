@@ -14,20 +14,11 @@ export default function App() {
   return (
     
 
-    <View className="h-screen bg-white">
-
-           <View className='top w-full h-[10vh] items-center mt-5 flex-row justify-evenly'>
-
-        <Image source={images.logo} className='size-24'></Image>
+    <View className="h-screen ">
 
 
-
-
-      </View>
-
-
-      <TopTab.Navigator>
-          <TopTab.Screen  name="Todo" component={Todo} />
+      <TopTab.Navigator className="mt-10">
+          <TopTab.Screen  name="Todo " component={Todo} />
           <TopTab.Screen name="Goals" component={Goals} />
 
         </TopTab.Navigator>

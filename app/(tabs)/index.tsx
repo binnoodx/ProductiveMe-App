@@ -38,16 +38,17 @@ const index = () => {
 
   <ScrollView className='flex-1 bg-white'>
 
-      <View className='top w-full mt-14 mb-5 flex-row justify-evenly items-center'>
+      <View className='top  w-full mt-8 mb-5 flex-row justify-evenly items-center'>
 
-        <TouchableOpacity onPress={RemoveToken}><Text>Clear Token</Text></TouchableOpacity>
+        {/* <TouchableOpacity onPress={RemoveToken}><Text>Clear Token</Text></TouchableOpacity> */}
 
-        {/* <Image source={images.logo} className='size-28'></Image> */}
-        <Text className='welcome_title font-extrabold text-orange-600 text-4xl'>Productive Me</Text>
+        <Image source={images.logo} className='size-20'></Image>
+        {/* <Text className='welcome_title font-extrabold text-orange-600 text-4xl'>Productive Me</Text> */}
 
         <View className='flex-col'>
-          <Text className='text-md italic font-semibold '>{new Date().toDateString()}</Text>
-        <Text className='text-md italic font-semibold '>{new Date().toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: true })}</Text>
+
+          <Image source={images.user} className='size-16 '></Image>
+
         </View>
 
 

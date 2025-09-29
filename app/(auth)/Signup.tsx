@@ -52,7 +52,7 @@ const Signup = () => {
     if (data.userPassword == data.conpass) {
 
       //Todo: Use .env file for URL
-      const response = await fetch(`http://192.168.1.6:3000/api/forSignup`, {
+      const response = await fetch(`http://10.0.0.43:3000/api/forSignup`, {
         method: "POST",
         body: JSON.stringify({
           userEmail: data.userEmail,

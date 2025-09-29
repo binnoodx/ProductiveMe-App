@@ -45,7 +45,7 @@ const SendOTPForRecovery = () => {
 
     const onSubmit = async (data: any) => {
         setLoading(true)
-        const response = await fetch(`http://192.168.1.6:3000/api/recoverAccountOTP`, {
+        const response = await fetch(`http://10.0.0.43:3000/api/recoverAccountOTP`, {
             method: "POST",
             body: JSON.stringify({
                 otp: data.otp,
