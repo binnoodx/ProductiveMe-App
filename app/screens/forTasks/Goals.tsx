@@ -6,8 +6,7 @@ import { useState, useEffect } from "react";
 import { Link } from "expo-router";
 import { useRouter } from "expo-router";
 import { saveToken } from "@/helper/tokenManager";
-import Config from "react-native-config";
-
+import { getTodo } from "@/helper/todoLocalStorage";
 
 const Goals = () => {
   const {
@@ -44,26 +43,11 @@ const Goals = () => {
 
   const onSubmit = async (data: any) => {
 
-    setLoading(true)
-    const response = await fetch(`http://192.168.1.6:3000/api/forLogin`, {
-      method: "POST",
-      body: JSON.stringify({
-        userEmail: data.email,
-        userPassword: data.password
-      }),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8"
-      }
-    })
-    const res = await response.json()
-    setLoading(false)
-    if (res.status) {
-      await saveToken(res.token)
-      Router.push("/(tabs)")
-    }
-    else {
-      setApiErrors(res.message)
-    }
+    
+
+    
+    
+    
   }
 
   return (
@@ -77,13 +61,6 @@ const Goals = () => {
 
         <Controller
           control={control}
-          rules={{
-            required: {
-              value: true,
-              message: "Provide a Goal"
-            },
-            
-          }}
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
               placeholder={`Write your goal for ${new Date().toLocaleString('default', { month: 'long' })}`}
@@ -96,7 +73,7 @@ const Goals = () => {
           )}
           name="goal"
         />
-        {errors.goal && <Text className="text-sm text-start w-full px-16 text-red-500 italic">{errors.goal?.message}</Text>}
+        {ApiErrors && <Text className="text-sm text-start w-full px-16 text-red-500 italic">{ApiErrors}</Text>}
         {Loading ? <TouchableOpacity disabled className=' bg-orange-400 w-[10vw] rounded-lg px-10 py-4'><ActivityIndicator size={"small"} color={"white"} /></TouchableOpacity>
           : <TouchableOpacity onPress={handleSubmit(onSubmit)} className=' bg-orange-400 w-[20vw] rounded-lg  py-4'><Text className='text-white w-full text-lg text-center font-semibold'>Add</Text></TouchableOpacity>
         }

@@ -45,11 +45,7 @@ const index = () => {
         <Image source={images.logo} className='size-20'></Image>
         {/* <Text className='welcome_title font-extrabold text-orange-600 text-4xl'>Productive Me</Text> */}
 
-        <View className='flex-col'>
-
-          <Image source={images.user} className='size-16 '></Image>
-
-        </View>
+        
 
 
 

@@ -2,6 +2,8 @@ import { ImageBackground, StyleSheet, Text, View, Image } from 'react-native'
 import React from 'react'
 import { Stack, Tabs } from 'expo-router'
 import { images } from '@/constants/image'
+import Toast from "react-native-toast-message";
+
 
 
 
@@ -9,6 +11,8 @@ const _layout = () => {
 
     return (
         <Stack>
+
+            <Toast topOffset={50} bottomOffset={80} />
 
 
             <Stack.Screen

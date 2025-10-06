@@ -1,6 +1,8 @@
 import { Stack } from "expo-router";
 import React from "react";
 import "./global.css";
+import Toast from "react-native-toast-message";
+
 
 export default function RootLayout() {
 
@@ -16,6 +18,8 @@ export default function RootLayout() {
         name="(tabs)"
         options={{ headerShown: false }}
       />
+
+      
 
 
     </Stack>

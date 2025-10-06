@@ -3,7 +3,7 @@ import React from 'react'
 import { Tabs } from 'expo-router'
 import { images } from '@/constants/image'
 import { Ionicons } from '@expo/vector-icons';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
+import Toast from "react-native-toast-message";
 
 
 
@@ -43,6 +43,7 @@ const _layout = () => {
 
 
     return (
+        
         <Tabs screenOptions={{
             tabBarShowLabel: false,
             tabBarStyle: {
