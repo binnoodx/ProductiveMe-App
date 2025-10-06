@@ -24,7 +24,7 @@ export default function App() {
 
           setisLoading(true)
 
-          const response = await fetch(`http://192.168.1.6:3000/api/my_detail`, {
+          const response = await fetch(`http://192.168.1.86:3000/api/my_detail`, {
             method: "POST",
             body: JSON.stringify({
               token: token

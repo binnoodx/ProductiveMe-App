@@ -1,10 +1,9 @@
-import { Text, View, TextInput, KeyboardAvoidingView, Image, Button, Alert, TouchableOpacity, ScrollView, Keyboard, ActivityIndicator, FlatList } from "react-native"
+import { Text, View, TextInput, KeyboardAvoidingView, Image, Button, Alert, TouchableOpacity, ScrollView, Keyboard, ActivityIndicator, FlatList, VirtualizedList } from "react-native"
 import { useForm, Controller } from "react-hook-form"
 import { images } from "@/constants/image"
 import Checkbox from "expo-checkbox";
 import { useState, useEffect } from "react";
 import { useRouter } from "expo-router";
-import Toast from "react-native-toast-message";
 import { saveTodo,getTodo,deleteTodo } from "@/helper/todoLocalStorage";
 
 
@@ -31,17 +30,18 @@ const Todo = () => {
   const Router = useRouter()
 
   useEffect(() => {
-    const showSubscription = Keyboard.addListener("keyboardDidShow", () => {
-      setIsKeyboardOn(true);
-    });
-    const hideSubscription = Keyboard.addListener("keyboardDidHide", () => {
-      setIsKeyboardOn(false);
-    });
-    return () => {
-      showSubscription.remove();
-      hideSubscription.remove();
-    };
+
+    getLocalTodo()
+    
+    
+
+
   }, []);
+
+  const getLocalTodo = async()=>{
+    const localTodo = await getTodo("todo")
+    settodos([...todos,localTodo])
+  }
 
 
 
@@ -49,25 +49,16 @@ const Todo = () => {
   const onSubmit = async (data: any) => {
 
     if(data.todo){
-      
-
-      await saveTodo(data.todo)
-      console.log("Todo saved Successfully")
-
+      settodos([...todos,data.todo])
+      await saveTodo(todos)
     }
-    
-
-
-
-
-
   }
+
+  
+
 
   return (
     <ScrollView className="h-screen">
-
-
-
       <View className="forInputs  flex flex-row w-screen mt-5 justify-center items-center gap-2">
 
 
@@ -94,17 +85,33 @@ const Todo = () => {
         }
       </View>
 
-      {/* <FlatList
+      <FlatList
       
       data={todos}
       renderItem={({item}) => (
 
 
 
-        <View className="mt-10 mx-7">
+        <View className="mt-10 mx-10 flex-row justify-between ">
 
 
-          <Text className="text-md">{item}</Text>
+          <View>
+            <Text className="text-md">{item}</Text>
+
+
+
+          </View>
+
+          <View className="flex-row gap-5">
+
+            <TouchableOpacity><Text>Delete</Text></TouchableOpacity>
+            <Text>Update</Text>
+
+
+          </View>
+
+
+
         </View>
 
 
@@ -113,7 +120,7 @@ const Todo = () => {
       )}  
       >
 
-      </FlatList> */}
+      </FlatList>
 
 
     </ScrollView>

@@ -1,21 +1,24 @@
 import * as SecureStore from "expo-secure-store";
 
-export async function saveTodo(todo: string) {
+export async function saveTodo(Todos:any) {
   try {
-    await SecureStore.setItemAsync("todo", todo);
-  } catch (e) {
-    console.error("Error saving todo", e);
+    const jsonValue = JSON.stringify(Todos);
+    await SecureStore.setItemAsync("todo", jsonValue);
+    console.log('Todos saved securely ✅');
+  } catch (error) {
+    console.log('Error saving Todos:', error);
   }
 }
 
-export async function getTodo() {
+export async function getTodo({key}:any) {
   try {
-    return await SecureStore.getItemAsync("todo");
-  } catch (e) {
-    console.error("Error getting todo", e);
-    return null;
+    const jsonValue = await SecureStore.getItemAsync("todo");
+    return jsonValue != null ? JSON.parse(jsonValue) : [];
+  } catch (error) {
+    console.log('Error reading Todos:', error);
+    return [];
   }
-}
+};
 
 export async function deleteTodo(todo:string) {
   try {

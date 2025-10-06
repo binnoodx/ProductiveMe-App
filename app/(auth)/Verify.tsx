@@ -42,7 +42,7 @@ const Login = () => {
 
   const onSubmit = async (data: any) => {
     setLoading(true)
-    const response = await fetch(`http://10.0.0.43:3000/api/forOTP`, {
+    const response = await fetch(`http://192.168.1.86:3000/api/forOTP`, {
       method: "POST",
       body: JSON.stringify({
         otp: data.otp,

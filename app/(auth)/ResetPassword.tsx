@@ -44,7 +44,7 @@ const ResetPassword = () => {
     const onSubmit = async (data: any) => {
         setLoading(true)
         const ResetToken = await getResetToken()
-        const response = await fetch(`http://10.0.0.43:3000/api/changePassword`, {
+        const response = await fetch(`http://192.168.1.86:3000/api/changePassword`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

@@ -1,36 +1,54 @@
-import { View, Text, ScrollView,Image, TouchableOpacity } from 'react-native'
+import { View, Text, ScrollView,Image, TouchableOpacity, FlatList } from 'react-native'
 import React from 'react'
 import { images } from '@/constants/image'
 import { Link,useRouter } from 'expo-router'
 import { getToken,removeToken } from '@/helper/tokenManager'
 import { useEffect,useState } from 'react'
+import { getTodo } from "@/helper/todoLocalStorage";
+import { useFocusEffect } from '@react-navigation/native'
+
+
 
 const index = () => {
   const Router=useRouter()
   const [token, setToken] = useState("")
+  const [todos, setTodos] = useState([])
 
   const RemoveToken = async()=>{
     await removeToken("token")
     Router.replace("/(auth)/Login")
     setToken("")
+  }
+
+  const getTodos = async()=>{
+
+    const todo = await getTodo("todo")
+    if(todo){
+      setTodos(todo)
+    }
+
+
+    
+
 
   }
 
 
 
-  useEffect(() => {
+  useFocusEffect(() => {
     const fetchToken = async () => {
       const token = await getToken()   
-
       if(!token){
         Router.replace("/(auth)/Login")
       }
       else{
         setToken(token)
+        getTodos()
+
       }
       }
     fetchToken()
-  }, [])
+  })
 
 
   return (
@@ -55,14 +73,30 @@ const index = () => {
       <View className='second flex-1 flex-row h-[30vh] w-full justify-evenly items-center'>
 
         <View className='h-full w-[45vw] bg-[#ECEFF1]'>
-          <Text className='mt-3 text-center italic text-slate-500 text-sm overflow-scroll'>Today's Tasks : </Text>
+          <Text className='mt-3 text-start italic text-slate-500 font-bold mx-2 text-sm overflow-scroll'>Today's Tasks : </Text>
 
           <ScrollView>
-          <Text className='mt-3 text-start ml-3 italic  text-slate-500 text-md'>1. Study Python </Text>
-          <Text className='mt-3 text-start ml-3 italic text-slate-500 text-md'>2. Learn React Native </Text>
-          <Text className='mt-3 text-start ml-3 italic text-slate-500 text-md'>3. Make Projects Websites </Text>
-          <Text className='mt-3 text-start ml-3 italic text-slate-500 text-md'>4. Learn Editing </Text>
-          <Text className='mt-3 text-start ml-3 italic  text-slate-500 text-md'>5. Study for CSIT Entrance </Text>
+          
+
+          <FlatList
+                
+                data={todos}
+                renderItem={({item , index}) => (
+                  <View className="mt-1 mx-1 flex-row justify-between ">
+          
+          
+                    <Text className='mt-3 text-start ml-3 italic  text-slate-500 text-md'>{index+1}. {item} </Text>
+          
+                  </View>
+          
+          
+          
+          
+                )}  
+                >
+          
+                </FlatList>
+          
           </ScrollView>
 
 
