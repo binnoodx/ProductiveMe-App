@@ -3,6 +3,8 @@ import { TextInput, Button, View, Image, Text, FlatList, TouchableOpacity, Scrol
 import { images } from "@/constants/image";
 import { getToken } from "@/helper/tokenManager";
 import { useRouter } from "expo-router";
+import { uri } from "@/constants/backend_uri";
+
 
 export default function App() {
   const Router = useRouter()
@@ -24,7 +26,7 @@ export default function App() {
 
           setisLoading(true)
 
-          const response = await fetch(`http://192.168.1.86:3000/api/my_detail`, {
+          const response = await fetch(`${uri.backend_uri}/api/my_detail`, {
             method: "POST",
             body: JSON.stringify({
               token: token

@@ -5,7 +5,7 @@ import Checkbox from "expo-checkbox";
 import { useState, useEffect } from "react";
 import { Link } from "expo-router";
 import { useRouter } from "expo-router";
-import { saveToken } from "@/helper/tokenManager";
+import { uri } from "@/constants/backend_uri";
 
 const GetEmailForRecovery = () => {
   const {
@@ -42,7 +42,7 @@ const GetEmailForRecovery = () => {
 
   const onSubmit = async (data: any) => {
     setLoading(true)
-    const response = await fetch(`http://192.168.1.86:3000/api/GetEmailForRecovery`, {
+    const response = await fetch(`${uri.backend_uri}/api/GetEmailForRecovery`, {
       method: "POST",
       body: JSON.stringify({
         email: data.email,

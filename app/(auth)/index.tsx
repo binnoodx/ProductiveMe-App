@@ -5,6 +5,8 @@ import { Link, useRouter } from 'expo-router'
 import { Route } from 'expo-router/build/Route'
 import { useEffect, useState } from 'react'
 import { getToken } from '@/helper/tokenManager'
+import { uri } from "@/constants/backend_uri";
+
 
 const index = () => {
 

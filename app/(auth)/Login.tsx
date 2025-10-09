@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import { Link } from "expo-router";
 import { useRouter } from "expo-router";
 import { saveToken } from "@/helper/tokenManager";
-import Config from "react-native-config";
+import { uri } from "@/constants/backend_uri";
 
 
 const Login = () => {
@@ -46,7 +46,7 @@ const Login = () => {
   const onSubmit = async (data: any) => {
 
     setLoading(true)
-    const response = await fetch(`http://192.168.1.86:3000/api/forLogin`, {
+    const response = await fetch(`${uri.backend_uri}/api/forLogin`, {
       method: "POST",
       body: JSON.stringify({
         userEmail: data.email,

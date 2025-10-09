@@ -1,129 +1,152 @@
-import { Text, View, TextInput, KeyboardAvoidingView, Image, Button, Alert, TouchableOpacity, ScrollView, Keyboard, ActivityIndicator, FlatList, VirtualizedList } from "react-native"
-import { useForm, Controller } from "react-hook-form"
-import { images } from "@/constants/image"
-import Checkbox from "expo-checkbox";
+import { 
+  Text, 
+  View, 
+  TextInput, 
+  TouchableOpacity, 
+  ScrollView, 
+  ActivityIndicator, 
+  FlatList 
+} from "react-native";
+import { useForm, Controller } from "react-hook-form";
 import { useState, useEffect } from "react";
-import { useRouter } from "expo-router";
-import { saveTodo,getTodo,deleteTodo } from "@/helper/todoLocalStorage";
+import { saveTodo, getTodo, deleteTodo, clearAllTodos } from "@/helper/todoLocalStorage";
+import Checkbox from "expo-checkbox";
 
-
-
+interface TodoItem {
+  id: number;
+  text: string;
+  completed: boolean;
+}
 
 const Todo = () => {
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    defaultValues: {
-      todo: "",
-    },
-  })
+  const { control, handleSubmit, reset } = useForm({
+    defaultValues: { todo: "" },
+  });
 
-  const [ApiErrors, setApiErrors] = useState("")
-  const [isChecked, setIsChecked] = useState(false)
-  const [IsKeyboardOn, setIsKeyboardOn] = useState(false)
-  const [Loading, setLoading] = useState(false)
-  const [todos, settodos] = useState(["Hey"])
+  const [todos, setTodos] = useState<TodoItem[]>([]);
+  const [loading, setLoading] = useState(false);
 
-
-  const Router = useRouter()
-
+  // Load todos on mount
   useEffect(() => {
-
-    getLocalTodo()
-    
-    
-
-
+    loadTodos();
   }, []);
 
-  const getLocalTodo = async()=>{
-    const localTodo = await getTodo("todo")
-    settodos([...todos,localTodo])
-  }
+  // Load and clean todos from storage
+  const loadTodos = async () => {
+    const localTodo = await getTodo();
 
+    // Filter invalid items & flatten nested arrays
+    const cleaned: TodoItem[] = localTodo
+      .flat()
+      .filter((t: any) => t && typeof t === "object" && t.text)
+      .map((t: any) => ({ id: t.id, text: t.text, completed: t.completed ?? false }));
 
+    setTodos(cleaned);
+    await saveTodo(cleaned);
+  };
 
-
+  // Add new todo
   const onSubmit = async (data: any) => {
-
-    if(data.todo){
-      settodos([...todos,data.todo])
-      await saveTodo(todos)
+    if (data.todo.trim()) {
+      const newTodo: TodoItem = {
+        id: Date.now(),
+        text: data.todo.trim(),
+        completed: false,
+      };
+      const updatedTodos = [...todos, newTodo];
+      setTodos(updatedTodos);
+      await saveTodo(updatedTodos);
+      reset();
     }
-  }
+  };
 
-  
+  // Delete a todo by id
+  const handleDelete = async (id: number) => {
+    await deleteTodo(id);
+    await loadTodos();
+  };
 
+  // Toggle completed
+  const toggleCompleted = async (id: number) => {
+    const updatedTodos = todos.map(todo =>
+      todo.id === id ? { ...todo, completed: !todo.completed } : todo
+    );
+    setTodos(updatedTodos);
+    await saveTodo(updatedTodos);
+  };
 
   return (
-    <ScrollView className="h-screen">
-      <View className="forInputs  flex flex-row w-screen mt-5 justify-center items-center gap-2">
-
-
+    <ScrollView className="h-screen bg-white">
+      {/* Input Section */}
+      <View className="flex flex-row w-screen mt-5 justify-center items-center gap-2 px-3">
         <Controller
           control={control}
-          rules={{
-
-
-          }}
+          name="todo"
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
               placeholder="Write your Todo for Today"
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
-              className="border border-slate-400 px-4 w-[70vw] bg-slate-50  text-black py-5 rounded-lg"
-              placeholderTextColor={"#94a3b8"}
+              className="border border-slate-400 px-4 w-[70vw] bg-slate-50 text-black py-4 rounded-lg"
+              placeholderTextColor="#94a3b8"
             />
           )}
-          name="todo"
         />
-        {Loading ? <TouchableOpacity disabled className=' bg-orange-400 w-[10vw] rounded-lg px-10 py-4'><ActivityIndicator size={"small"} color={"white"} /></TouchableOpacity>
-          : <TouchableOpacity onPress={handleSubmit(onSubmit)} className=' bg-orange-400 w-[20vw] rounded-lg  py-4'><Text className='text-white w-full text-lg text-center font-semibold'>Add</Text></TouchableOpacity>
-        }
+
+        {loading ? (
+          <TouchableOpacity
+            disabled
+            className="bg-orange-400 w-[20vw] rounded-lg py-4 flex items-center justify-center"
+          >
+            <ActivityIndicator size="small" color="white" />
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            onPress={handleSubmit(onSubmit)}
+            className="bg-orange-400 w-[20vw] rounded-lg py-4 flex items-center justify-center"
+          >
+            <Text className="text-white text-lg font-semibold">Add</Text>
+          </TouchableOpacity>
+        )}
       </View>
 
+      {/* Todo List */}
       <FlatList
+        data={todos}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <View className="mt-6 mx-6 flex-row justify-between items-center border-b border-slate-200 pb-3">
+            <Checkbox
+              className="scale-90"
+              value={item.completed}
+              onValueChange={() => toggleCompleted(item.id)}
+              color={item.completed ? "tomato" : undefined}
+            />
+
+            <Text
+              className={`text-lg flex-1 ml-3 ${item.completed ? "line-through text-gray-400" : "text-black"}`}
+            >
+              {item.text}
+            </Text>
+
+            <TouchableOpacity onPress={() => handleDelete(item.id)}>
+              <Text className="text-red-500 font-semibold">Delete</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+      />
+
       
-      data={todos}
-      renderItem={({item}) => (
 
-
-
-        <View className="mt-10 mx-10 flex-row justify-between ">
-
-
-          <View>
-            <Text className="text-md">{item}</Text>
-
-
-
-          </View>
-
-          <View className="flex-row gap-5">
-
-            <TouchableOpacity><Text>Delete</Text></TouchableOpacity>
-            <Text>Update</Text>
-
-
-          </View>
-
-
-
+      {/* Empty State */}
+      {todos.length === 0 && (
+        <View className="h-[80vh] w-screen justify-center items-center flex-1">
+          <Text className="text-xl font-semibold">No Todo Found ☹️</Text>
         </View>
-
-
-
-
-      )}  
-      >
-
-      </FlatList>
-
-
+      )}
     </ScrollView>
-  )
-}
-export default Todo
+  );
+};
+
+export default Todo;

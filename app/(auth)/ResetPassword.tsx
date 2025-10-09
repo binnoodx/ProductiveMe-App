@@ -3,7 +3,7 @@ import { useForm, Controller } from "react-hook-form"
 import { images } from "@/constants/image"
 import Checkbox from "expo-checkbox";
 import { useState, useEffect } from "react";
-import { Link } from "expo-router";
+import { uri } from "@/constants/backend_uri";
 import { useRouter } from "expo-router";
 import { getResetToken } from "@/helper/resetTokenManager";
 
@@ -44,7 +44,7 @@ const ResetPassword = () => {
     const onSubmit = async (data: any) => {
         setLoading(true)
         const ResetToken = await getResetToken()
-        const response = await fetch(`http://192.168.1.86:3000/api/changePassword`, {
+        const response = await fetch(`${uri.backend_uri}/api/changePassword`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

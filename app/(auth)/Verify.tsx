@@ -3,7 +3,7 @@ import { useForm, Controller } from "react-hook-form"
 import { images } from "@/constants/image"
 import Checkbox from "expo-checkbox";
 import { useState, useEffect } from "react";
-import { Link } from "expo-router";
+import { uri } from "@/constants/backend_uri";
 import { useRouter } from "expo-router";
 import { saveToken } from "@/helper/tokenManager";
 
@@ -42,7 +42,7 @@ const Login = () => {
 
   const onSubmit = async (data: any) => {
     setLoading(true)
-    const response = await fetch(`http://192.168.1.86:3000/api/forOTP`, {
+    const response = await fetch(`${uri.backend_uri}/api/forOTP`, {
       method: "POST",
       body: JSON.stringify({
         otp: data.otp,
